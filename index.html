@@ -173,24 +173,20 @@
       color: rgba(240,235,227,0.82);
     }
 
-    /* ─── FEATURE ROW ────────────────────────────── */
-    .feature-row {
+    /* ─── PHOTO GRID ─────────────────────────────── */
+    .photo-grid {
       display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 3px;
-      margin-bottom: 3px;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 44vh 32vh 43vh 30vh;
+      gap: 0;
     }
 
-    .feature-row .img-wrap {
+    .cell {
       overflow: hidden;
-      aspect-ratio: auto;
+      position: relative;
     }
 
-    .feature-row .img-wrap.tall {
-      aspect-ratio: 4/3;
-    }
-
-    .feature-row img {
+    .cell img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -198,57 +194,17 @@
       transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .feature-row .img-wrap:hover img { transform: scale(1.04); }
+    .cell:hover img { transform: scale(1.04); }
 
-    /* ─── GALLERY MASONRY ────────────────────────── */
-    .gallery {
-      columns: 3;
-      column-gap: 3px;
-      padding: 0;
-    }
-
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 3px;
-      overflow: hidden;
-    }
-
-    .gallery-item img {
-      width: 100%;
-      display: block;
-      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .gallery-item:hover img { transform: scale(1.04); }
-
-    /* ─── SECOND FEATURE ROW ─────────────────────── */
-    .feature-row-2 {
-      display: grid;
-      grid-template-columns: 2fr 3fr;
-      gap: 3px;
-      margin-top: 3px;
-    }
-
-    .feature-row-2 .img-wrap {
-      overflow: hidden;
-    }
-
-    .feature-row-2 img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .feature-row-2 .img-wrap:hover img { transform: scale(1.04); }
+    .span2 { grid-column: span 2; }
+    .span3 { grid-column: span 3; }
 
     /* ─── CONTACT ─────────────────────────────────── */
     .contact {
       text-align: center;
       padding: 9rem 2rem 10rem;
       border-top: 1px solid var(--rule);
-      margin-top: 6rem;
+      margin-top: 5rem;
     }
 
     .contact-eyebrow {
@@ -321,15 +277,20 @@
 
     /* ─── RESPONSIVE ──────────────────────────────── */
     @media (max-width: 900px) {
-      .gallery { columns: 2; }
-      .feature-row { grid-template-columns: 1fr 1fr; }
-      .feature-row-2 { grid-template-columns: 1fr 1fr; }
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 38vh 30vh 36vh 30vh 28vh 30vh;
+      }
+      .span3 { grid-column: span 2; }
     }
 
     @media (max-width: 640px) {
-      .gallery { columns: 1; }
-      .feature-row { grid-template-columns: 1fr; }
-      .feature-row-2 { grid-template-columns: 1fr; }
+      .photo-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .photo-grid .cell { aspect-ratio: 4/3; }
+      .span2, .span3 { grid-column: span 2; }
       .stats { flex-wrap: wrap; }
       .stat {
         flex-basis: 50%;
@@ -373,8 +334,8 @@
       <span class="stat-label">Sq. Ft.</span>
     </div>
     <div class="stat">
-      <span class="stat-value">½</span>
-      <span class="stat-label">Acre</span>
+      <span class="stat-value">.44</span>
+      <span class="stat-label">Acres</span>
     </div>
     <div class="stat">
       <span class="stat-value">1950s</span>
@@ -388,46 +349,53 @@
     <p>Discover your retreat in South Knoxville. This charming two-bedroom, one-bath home sits on nearly half an acre of wooded tranquility, just minutes from the University of Tennessee Knoxville and downtown. Built in the 1950s with original hardwood floors, the home has been thoughtfully updated with a modern kitchen and bathroom, a new heat pump for efficiency, and a screened back porch perfect for quiet evenings. The fenced yard is ideal for dogs, while additional lawn offers room to roam. A partial basement provides practical storage and laundry space. Located close to Baker Creek in a booming South Knoxville neighborhood, this 867 square-foot home delivers that coveted cabin feel without the isolation — privacy and convenience, wrapped together.</p>
   </section>
 
-  <!-- FEATURE ROW 1: Lawn + Porch -->
-  <div class="feature-row">
-    <div class="img-wrap tall">
-      <img src="summer lawn.jpg" alt="Half-acre wooded grounds">
-    </div>
-    <div class="img-wrap tall">
-      <img src="back porch new.jpg" alt="Screened back porch">
-    </div>
-  </div>
+  <!-- PHOTO GRID -->
+  <div class="photo-grid">
 
-  <!-- GALLERY GRID -->
-  <div class="gallery">
-    <div class="gallery-item">
-      <img src="livingroom.jpg" alt="Living room with hardwood floors">
+    <!-- Row 1 (44vh): wide exterior + aerial -->
+    <div class="cell span3">
+      <img src="summer lawn.jpg" alt="Half-acre wooded grounds" style="object-position: center 45%;">
     </div>
-    <div class="gallery-item">
-      <img src="bathroom.jpg" alt="Fully remodeled bathroom">
+    <div class="cell">
+      <img src="aerial shot.jpg" alt="Aerial view of the property" style="object-position: center center;">
     </div>
-    <div class="gallery-item">
-      <img src="kitchen1.jpg" alt="Updated kitchen with granite">
-    </div>
-    <div class="gallery-item">
-      <img src="2 Bedroom 1.jpg" alt="Primary bedroom">
-    </div>
-    <div class="gallery-item">
-      <img src="living room new table.jpg" alt="Living room detail">
-    </div>
-    <div class="gallery-item">
-      <img src="new outside 1.jpg" alt="Side exterior view">
-    </div>
-  </div>
 
-  <!-- FEATURE ROW 2: Front + Driveway -->
-  <div class="feature-row-2">
-    <div class="img-wrap">
-      <img src="front new.jpg" alt="Front of home" style="aspect-ratio:3/4; object-fit:cover;">
+    <!-- Row 2 (32vh): living room + kitchen + porch — all landscape -->
+    <div class="cell span2">
+      <img src="livingroom.jpg" alt="Living room with hardwood floors" style="object-position: center 38%;">
     </div>
-    <div class="img-wrap">
-      <img src="driveway 1.jpg" alt="Long concrete driveway and grounds" style="aspect-ratio:16/9; object-fit:cover;">
+    <div class="cell">
+      <img src="kitchen1.jpg" alt="Updated kitchen" style="object-position: center center;">
     </div>
+    <div class="cell">
+      <img src="back porch new.jpg" alt="Screened back porch" style="object-position: center center;">
+    </div>
+
+    <!-- Row 3 (43vh): portrait-friendly row — bathroom gets room to breathe -->
+    <div class="cell" style="background: var(--bg);">
+      <img src="bathroom.jpg" alt="Fully remodeled bathroom" style="object-fit: contain; object-position: center center;">
+    </div>
+    <div class="cell">
+      <img src="new outside 1.jpg" alt="Side exterior" style="object-position: center 30%;">
+    </div>
+    <div class="cell">
+      <img src="front new.jpg" alt="Front of home" style="object-position: center 40%;">
+    </div>
+    <div class="cell">
+      <img src="livingroom2.jpg" alt="Living room — evening light" style="object-position: center 45%;">
+    </div>
+
+    <!-- Row 4 (30vh): bedrooms + driveway -->
+    <div class="cell">
+      <img src="2 Bedroom 1.jpg" alt="Primary bedroom" style="object-position: center 52%;">
+    </div>
+    <div class="cell">
+      <img src="2nd bedroom.jpg" alt="Second bedroom" style="object-position: center 50%;">
+    </div>
+    <div class="cell span2">
+      <img src="driveway 1.jpg" alt="Concrete driveway and grounds" style="object-position: center 48%;">
+    </div>
+
   </div>
 
   <!-- CONTACT -->

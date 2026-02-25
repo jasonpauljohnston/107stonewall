@@ -177,7 +177,7 @@
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 44vh 32vh 43vh 30vh;
+      grid-template-rows: 44vh 32vh 32vh 43vh 26vh 36vh;
       gap: 0;
     }
 
@@ -198,6 +198,80 @@
 
     .span2 { grid-column: span 2; }
     .span3 { grid-column: span 3; }
+    .span4 { grid-column: span 4; }
+
+    /* ─── LIGHTBOX ────────────────────────────────── */
+    .lb-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,9,8,0.96);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    .lb-overlay.active { display: flex; }
+
+    .lb-img-wrap {
+      max-width: 92vw;
+      max-height: 92vh;
+      animation: lb-in 0.22s ease;
+    }
+    @keyframes lb-in {
+      from { opacity: 0; transform: scale(0.96); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .lb-img-wrap img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      display: block;
+      cursor: default;
+    }
+    .lb-close {
+      position: fixed;
+      top: 1.4rem;
+      right: 1.8rem;
+      color: rgba(240,235,227,0.55);
+      font-size: 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      transition: color 0.2s;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+    }
+    .lb-close:hover { color: #fff; }
+    .lb-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: rgba(240,235,227,0.45);
+      font-size: 3rem;
+      cursor: pointer;
+      padding: 1rem 1.4rem;
+      transition: color 0.2s;
+      line-height: 1;
+    }
+    .lb-arrow:hover { color: #fff; }
+    .lb-prev { left: 0.5rem; }
+    .lb-next { right: 0.5rem; }
+    .lb-counter {
+      position: fixed;
+      bottom: 1.4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: rgba(240,235,227,0.3);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .cell { cursor: zoom-in; }
 
     /* ─── CONTACT ─────────────────────────────────── */
     .contact {
@@ -279,9 +353,9 @@
     @media (max-width: 900px) {
       .photo-grid {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: 38vh 30vh 36vh 30vh 28vh 30vh;
+        grid-template-rows: 38vh 30vh 30vh 36vh 22vh 22vh 30vh;
       }
-      .span3 { grid-column: span 2; }
+      .span3, .span4 { grid-column: span 2; }
     }
 
     @media (max-width: 640px) {
@@ -290,7 +364,7 @@
         grid-template-rows: auto;
       }
       .photo-grid .cell { aspect-ratio: 4/3; }
-      .span2, .span3 { grid-column: span 2; }
+      .span2, .span3, .span4 { grid-column: span 2; }
       .stats { flex-wrap: wrap; }
       .stat {
         flex-basis: 50%;
@@ -311,7 +385,7 @@
         <span class="hero-eyebrow">Private Sale · South Knoxville, Tennessee</span>
         <h1 class="hero-title">107 Stonewall Dr.<br><em>Your wooded retreat awaits.</em></h1>
         <div class="hero-price">
-          <span class="price-main">$275,000</span>
+          <span class="price-main">$275,000 (firm)</span>
           <div class="price-divider"></div>
           <span class="price-sub">Appraised at<br>$292,000</span>
         </div>
@@ -346,7 +420,7 @@
   <!-- DESCRIPTION -->
   <section class="description">
     <span class="section-label">The Property</span>
-    <p>Discover your retreat in South Knoxville. This charming two-bedroom, one-bath home sits on nearly half an acre of wooded tranquility, just minutes from the University of Tennessee Knoxville and downtown. Built in the 1950s with original hardwood floors, the home has been thoughtfully updated with a modern kitchen and bathroom, a new heat pump for efficiency, and a screened back porch perfect for quiet evenings. The fenced yard is ideal for dogs, while additional lawn offers room to roam. A partial basement provides practical storage and laundry space. Located close to Baker Creek in a booming South Knoxville neighborhood, this 867 square-foot home delivers that coveted cabin feel without the isolation — privacy and convenience, wrapped together.</p>
+    <p>Discover your retreat in South Knoxville. This charming two-bedroom, one-bath home sits on nearly half an acre of wooded tranquility, just minutes from the University of Tennessee Knoxville and downtown. Built in the 1950s with original hardwood floors, the home has been thoughtfully updated throughout — the kitchen features modern stainless steel appliances including a dishwasher replaced in 2024, and the bathroom has been fully renovated. A new heat pump keeps things efficient, and a screened back porch invites quiet evenings outdoors. The fenced yard is ideal for dogs, while additional lawn offers room to roam. A partial basement provides practical storage and laundry space — washer and dryer included. Located close to Baker Creek in a booming South Knoxville neighborhood, this 867 square-foot home delivers that coveted cabin feel without the isolation — privacy and convenience, wrapped together.</p>
   </section>
 
   <!-- PHOTO GRID -->
@@ -357,21 +431,32 @@
       <img src="summer lawn.jpg" alt="Half-acre wooded grounds" style="object-position: center 45%;">
     </div>
     <div class="cell">
-      <img src="aerial shot.jpg" alt="Aerial view of the property" style="object-position: center center;">
+      <img src="aerial shot.jpg" alt="Aerial property boundary view" style="object-position: center center;">
     </div>
 
-    <!-- Row 2 (32vh): living room + kitchen + porch — all landscape -->
+    <!-- Row 2 (32vh): living room + new kitchen wide shot -->
     <div class="cell span2">
       <img src="livingroom.jpg" alt="Living room with hardwood floors" style="object-position: center 38%;">
     </div>
+    <div class="cell span2">
+      <img src="IMG_3326.jpg" alt="Kitchen and dining area" style="object-position: center 45%;">
+    </div>
+
+    <!-- Row 3 (32vh): kitchen detail + porch + living room evening -->
     <div class="cell">
-      <img src="kitchen1.jpg" alt="Updated kitchen" style="object-position: center center;">
+      <img src="IMG_3331.jpg" alt="Kitchen with stainless appliances" style="object-position: center 40%;">
+    </div>
+    <div class="cell">
+      <img src="IMG_3334.jpg" alt="Gas range and microwave" style="object-position: center 35%;">
     </div>
     <div class="cell">
       <img src="back porch new.jpg" alt="Screened back porch" style="object-position: center center;">
     </div>
+    <div class="cell">
+      <img src="livingroom2.jpg" alt="Living room — evening light" style="object-position: center 45%;">
+    </div>
 
-    <!-- Row 3 (43vh): portrait-friendly row — bathroom gets room to breathe -->
+    <!-- Row 4 (43vh): portrait-friendly — bathroom gets full height, bedrooms + exterior -->
     <div class="cell" style="background: var(--bg);">
       <img src="bathroom.jpg" alt="Fully remodeled bathroom" style="object-fit: contain; object-position: center center;">
     </div>
@@ -379,21 +464,26 @@
       <img src="new outside 1.jpg" alt="Side exterior" style="object-position: center 30%;">
     </div>
     <div class="cell">
-      <img src="front new.jpg" alt="Front of home" style="object-position: center 40%;">
-    </div>
-    <div class="cell">
-      <img src="livingroom2.jpg" alt="Living room — evening light" style="object-position: center 45%;">
-    </div>
-
-    <!-- Row 4 (30vh): bedrooms + driveway -->
-    <div class="cell">
       <img src="2 Bedroom 1.jpg" alt="Primary bedroom" style="object-position: center 52%;">
     </div>
     <div class="cell">
       <img src="2nd bedroom.jpg" alt="Second bedroom" style="object-position: center 50%;">
     </div>
+
+    <!-- Row 5 (26vh): basement — intentionally smaller -->
+    <div class="cell">
+      <img src="IMG_3338.jpg" alt="Basement garage access" style="object-position: center 40%;">
+    </div>
     <div class="cell span2">
-      <img src="driveway 1.jpg" alt="Concrete driveway and grounds" style="object-position: center 48%;">
+      <img src="IMG_3339.jpg" alt="Basement storage space" style="object-position: center 35%;">
+    </div>
+    <div class="cell">
+      <img src="IMG_3340.jpg" alt="Washer and dryer included" style="object-position: center 40%;">
+    </div>
+
+    <!-- Row 6 (36vh): full-width exterior finale -->
+    <div class="cell span4">
+      <img src="driveway 1.jpg" alt="Long concrete driveway and wooded grounds" style="object-position: center 48%;">
     </div>
 
   </div>
@@ -403,7 +493,7 @@
     <span class="contact-eyebrow">Private Sale · Going to Market End of March</span>
     <h2>Interested? Let's talk.</h2>
     <p class="contact-note">
-      Recently appraised at <strong>$292,000</strong> — offered at <strong>$275,000</strong> for private sale.<br>
+      Recently appraised at <strong>$292,000</strong> — offered at <strong>$275,000 (firm)</strong> for private sale.<br>
       Will officially list on the open market at the end of March.
     </p>
     <a href="tel:8592020592" class="contact-phone">859-202-0592</a>
@@ -411,6 +501,63 @@
   </section>
 
   <footer>107 Stonewall Dr &nbsp;·&nbsp; Knoxville, TN &nbsp;·&nbsp; Private Listing</footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lb-overlay" id="lb" role="dialog" aria-modal="true">
+    <button class="lb-close" aria-label="Close">&#x2715;</button>
+    <button class="lb-arrow lb-prev" aria-label="Previous">&#8249;</button>
+    <div class="lb-img-wrap"><img src="" alt=""></div>
+    <button class="lb-arrow lb-next" aria-label="Next">&#8250;</button>
+    <div class="lb-counter"></div>
+  </div>
+
+  <script>
+  (function () {
+    var cells = Array.from(document.querySelectorAll('.photo-grid .cell'));
+    var srcs  = cells.map(function (c) { return c.querySelector('img').src; });
+    var alts  = cells.map(function (c) { return c.querySelector('img').alt; });
+
+    var overlay = document.getElementById('lb');
+    var lbImg   = overlay.querySelector('.lb-img-wrap img');
+    var counter = overlay.querySelector('.lb-counter');
+    var current = 0;
+
+    function show(i) {
+      current = (i + srcs.length) % srcs.length;
+      lbImg.src = srcs[current];
+      lbImg.alt = alts[current];
+      counter.textContent = (current + 1) + ' \u00B7 ' + srcs.length;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    cells.forEach(function (cell, i) {
+      cell.addEventListener('click', function () { show(i); });
+    });
+
+    overlay.querySelector('.lb-close').addEventListener('click', close);
+    overlay.querySelector('.lb-prev').addEventListener('click', function (e) {
+      e.stopPropagation(); show(current - 1);
+    });
+    overlay.querySelector('.lb-next').addEventListener('click', function (e) {
+      e.stopPropagation(); show(current + 1);
+    });
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!overlay.classList.contains('active')) return;
+      if (e.key === 'Escape')      close();
+      if (e.key === 'ArrowLeft')   show(current - 1);
+      if (e.key === 'ArrowRight')  show(current + 1);
+    });
+  })();
+  </script>
 
 </body>
 </html>
